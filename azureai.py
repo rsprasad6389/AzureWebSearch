@@ -21,9 +21,21 @@ openai_client = project_client.get_openai_client()
 print(openai_client)
 
 # Reference the agent to get a response
-response = openai_client.responses.create(
-    input=[{"role": "user", "content": "Tell me what you can help with."}],
-    extra_body={"agent_reference": {"name": my_agent, "version": my_version, "type": "agent_reference"}},
-)
+try:
+    response = openai_client.responses.create(
+        input="Tell me what you can help with.",
+        extra_body={
+            "agent_reference": {
+                "name": "ABMWebSearchAgent",
+                "version": "4",
+                "type": "agent_reference"
+            }
+        }
+    )
+    st.write(response.output_text)
 
+except Exception as e:
+    st.error(str(e))
+    import traceback
+    st.text(traceback.format_exc())
 st.write(f"Response output: {response.output_text}")
