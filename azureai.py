@@ -1,32 +1,51 @@
-from azure.identity import DefaultAzureCredential
-from azure.core.credentials import AzureKeyCredential
-from azure.ai.projects import AIProjectClient
-import os
-from dotenv import load_dotenv
 import streamlit as st
+from openai import AzureOpenAI
 
-load_dotenv()
+# --- 1. CONFIGURATION ---
 
-my_endpoint = os.getenv("AZURE_PROJECT_ENDPOINT")
-my_api_key = os.getenv("AZURE_API_KEY")
-st.write('API Key is..', my_api_key)
+PROJECT_ENDPOINT = os.getenv("AZURE_PROJECT_ENDPOINT")
+API_KEY = os.getenv("AZURE_PROJECT_API_KEY")
+AGENT_ID = os.getenv("AZURE_AGENT_ID") # The ID of your ABMWebSearchAgent
 
+st.title("🔍 Agentic Web Search (API Key)")
 
-project_client = AIProjectClient(
-    endpoint=my_endpoint,
-    credential=AzureKeyCredential(my_api_key)
-)
-st.write(project_client)
-my_agent = "ABMWebSearchAgent"
-my_version = "4"
+# --- 2. INITIALIZE OPENAI CLIENT ---
+# We append /openai/v1 to your project endpoint for direct API calls
+@st.cache_resource
+def get_openai_client():
+    return AzureOpenAI(
+        azure_endpoint=PROJECT_ENDPOINT,
+        api_key=API_KEY,
+        api_version="2024-10-21" # Use the latest agent-supported version
+    )
 
-openai_client = project_client.get_openai_client()
-st.write(openai_client)
+client = get_openai_client()
+st.write(client)
 
-# Reference the agent to get a response
-response = openai_client.responses.create(
-    input=[{"role": "user", "content": "Tell me what you can help with."}],
-    extra_body={"agent_reference": {"name": my_agent, "version": my_version, "type": "agent_reference"}},
-)
+# --- 3. UI ---
+cust_name = st.text_input("Customer Name")
+acc_name = st.text_input("Account Name")
 
-st.write(f"Response output: {response.output_text}")
+if st.button("Search & Summarize"):
+    if cust_name and acc_name:
+        with st.spinner("Searching..."):
+            try:
+                # 4. EXECUTION
+                # The 'responses' resource is specific to Azure Agents
+                response = client.post(
+                    "responses", 
+                    body={
+                        "input": f"Search for recent news regarding {cust_name} and {acc_name}.",
+                        "agent_id": AGENT_ID
+                    },
+                    cast_to=dict # Get raw JSON to read citations
+                )
+
+                # 5. DISPLAY
+                st.subheader("Summary")
+                st.write(response.get("output_text"))
+
+            except Exception as e:
+                st.error(f"Execution Error: {e}")
+    else:
+        st.warning("Please fill in both fields.")
