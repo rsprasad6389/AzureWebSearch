@@ -3,3 +3,15 @@ azure-ai-projects>=2.0.1
 azure-identity
 python-dotenv
 openai
+snowflake-connector-python>=3.6.0
+snowflake-snowpark-python>=1.11.0
+
+python-dotenv>=1.0.0
+matplotlib>=3.7.0
+
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-community>=0.0.30
+langchain-openai>=0.0.6
+
+openai>=1.0.0
