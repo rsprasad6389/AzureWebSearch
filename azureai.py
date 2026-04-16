@@ -19,7 +19,7 @@ def get_openai_client():
     return AzureOpenAI(
         azure_endpoint=PROJECT_ENDPOINT,
         api_key=API_KEY,
-        api_version="2024-10-21" # Use the latest agent-supported version
+        api_version="2024-10-27-preview" # Use the latest agent-supported version
     )
 
 client = get_openai_client()
