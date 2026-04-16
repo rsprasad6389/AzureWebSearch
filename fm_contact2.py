@@ -203,7 +203,7 @@ Write ONLY Python code below.
 def FM_Contact_Tool(query: str):
     """
 Use this tool for ALL questions related to:
-- contact details
+- contact details or details of an email id
 - total opportunities
 - open/closed opportunities
 - won/lost amounts
