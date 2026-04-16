@@ -1,4 +1,5 @@
 from azure.identity import DefaultAzureCredential
+from azure.core.credentials import AzureKeyCredential
 from azure.ai.projects import AIProjectClient
 import os
 from dotenv import load_dotenv
@@ -7,14 +8,14 @@ import streamlit as st
 load_dotenv()
 
 my_endpoint = os.getenv("AZURE_PROJECT_ENDPOINT")
-
+my_api_key = os.getenv("AZURE_API_KEY")
 
 
 project_client = AIProjectClient(
     endpoint=my_endpoint,
-    credential=DefaultAzureCredential(),
+    credential=AzureKeyCredential(my_api_key)
 )
-
+st.write(project_client)
 my_agent = "ABMWebSearchAgent"
 my_version = "4"
 
