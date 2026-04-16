@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 import streamlit as st
 
-load_dotenv(
+load_dotenv()
 
 my_endpoint = os.getenv("AZURE_PROJECT_ENDPOINT")
 
