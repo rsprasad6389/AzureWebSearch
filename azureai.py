@@ -9,6 +9,7 @@ load_dotenv()
 
 my_endpoint = os.getenv("AZURE_PROJECT_ENDPOINT")
 my_api_key = os.getenv("AZURE_API_KEY")
+st.write('API Key is..', my_api_key)
 
 
 project_client = AIProjectClient(
