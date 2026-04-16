@@ -1,6 +1,9 @@
 import streamlit as st
 from openai import AzureOpenAI
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # --- 1. CONFIGURATION ---
 
 PROJECT_ENDPOINT = os.getenv("AZURE_PROJECT_ENDPOINT")
