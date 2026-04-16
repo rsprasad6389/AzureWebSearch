@@ -38,4 +38,4 @@ except Exception as e:
     st.error(str(e))
     import traceback
     st.text(traceback.format_exc())
-st.write(f"Response output: {response.output_text}")
+
