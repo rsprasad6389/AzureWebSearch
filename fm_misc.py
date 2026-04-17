@@ -297,7 +297,7 @@ def FM_Misc_fn(query: str, email:str, flag:int) -> str:
     print('I am in FM_Misc tool and email is', email)
     # keywords = extract_keywords(st.session_state['prompt'])
     global df
-    df = pd.read_pickle(BASE_DIR/'df_misc_funnel.pkl')
+    df = pd.read_pickle('df_misc_funnel.pkl')
     # df_rls = pd.read_pickle(BASE_DIR/'rls.pkl')
     
     # print(relevant_email_list)
