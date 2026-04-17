@@ -16,3 +16,5 @@ langchain-openai>=0.0.6
 
 openai>=1.0.0
 openpyxl
+tavily-python
+firecrawl-py
