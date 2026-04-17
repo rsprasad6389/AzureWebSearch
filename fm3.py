@@ -42,8 +42,35 @@ tavily = TavilyClient(api_key=TAVILY_API_KEY)
 firecrawl = Firecrawl(api_key=FIRECRAWL_API_KEY)
 
 
-email = st.text_input('Enter email').strip().lower()
-print('Email is..', email)
+# email = st.text_input('Enter email').strip().lower()
+def get_logged_in_user():
+    """
+    Extracts the logged-in user's email from Azure App Service Easy Auth headers.
+    Works on Azure App Service (Linux or Windows) with Authentication enabled.
+    """
+
+    # Streamlit >= 1.38 exposes incoming HTTP headers via st.context.headers
+    headers = getattr(st, "context", None)
+    # st.write('headers are..')
+    # st.write(headers)
+    if headers and hasattr(st.context, "headers"):
+        # Header names are lowercase in st.context.headers
+        user_email = st.context.headers.get("x-ms-client-principal-name")
+        if user_email:
+            return user_email
+
+    # Local dev fallback (optional)
+    import os
+    if os.getenv("LOCAL_DEV", "false").lower() == "true":
+        return os.getenv("LOCAL_USER_EMAIL", "local.user@example.com")
+
+    return None
+
+
+# ✅ Use it in your Streamlit app
+email = get_logged_in_user().lower()
+st.sidebar.success(f"👤 Logged in as: {email}")
+
 exception_email = ['rsprasad@beckman.com', 'ldmello@beckman.com',\
                    'pbopp@beckman.com']
 flag = 0
