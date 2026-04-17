@@ -838,6 +838,7 @@ def main():
             5. A 20-second cold-call opener
             6. Also include the open opportunities and give me opportunity specific conversation that sales reps can have with the customer
                                      to move the opportunity forward or close the deal.
+            7. Also suggest which Danaher products can be sold to the customer
 
             CRM Data:
             {row_data}
