@@ -33,7 +33,7 @@ from tavily import TavilyClient
 from firecrawl import Firecrawl
 from langchain_openai import AzureChatOpenAI
 import requests
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 FIRECRAWL_API_KEY = os.getenv("FIRECRAWL_API_KEY")
@@ -102,11 +102,11 @@ llm = AzureChatOpenAI(
 
 # tavily = TavilyClient(api_key=TAVILY_API_KEY)
 # firecrawl = Firecrawl(api_key=FIRECRAWL_API_KEY)
-BING_API_KEY = os.getenv("BING_API_KEY")
-BING_ENDPOINT = os.getenv(
-    "BING_ENDPOINT",
-    "https://api.bing.microsoft.com/v7.0/search"
-)
+# BING_API_KEY = os.getenv("BING_API_KEY")
+# BING_ENDPOINT = os.getenv(
+#     "BING_ENDPOINT",
+#     "https://api.bing.microsoft.com/v7.0/search"
+# )
 
 # def crawl_url(url: str):
 #     """
