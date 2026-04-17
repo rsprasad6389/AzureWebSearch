@@ -283,7 +283,7 @@ def simple_web_agent(company: str, country: str, question="latest news"):
     Simple combined search + crawl + LLM summary agent.
     """
 
-    search_query = f"{company} {country} {question}"
+    search_query = f" news about {company} {country} {question}"
     tavily_results = web_search(search_query, num_results=1)
 
     crawled_pages = []
