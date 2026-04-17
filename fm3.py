@@ -257,7 +257,7 @@ def simple_web_agent(company: str, country: str, question="latest news"):
     """
 
     search_query = f"{company} {country} {question}"
-    tavily_results = web_search(search_query, num_results=2)
+    tavily_results = web_search(search_query, num_results=1)
 
     crawled_pages = []
 
