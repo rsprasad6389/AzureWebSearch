@@ -83,12 +83,12 @@ st.caption("Type your question below or use one of the sample questions as inspi
 
 st.markdown("### 💡 Example Questions")
 canned_questions = [
-    "Compare win rate across different months for 2025 with 2024",
-    "Show MQL to SQL ratio for different high geos for 2025 in a table with sql count, mql count and sql/mql ratio",
-    "Show funnel velocity won across different obi groups for 2025",
-    "Show the total open weighted funnel closing in this quarter in 2025 across different high geos",
-    "Sort campaigns in North America by sql/mql ratio for 2025 and show in a table campaign name, sql count, mql count and sql/mql ratio",
-    "Compare the funnel created across different high geos in 2025 by a pie chart"
+    "Split of funnel or amount by lead source",
+    "Which email is present in more than one Opco",
+    "Split of amount or funnel by Opco",
+    "Details of a particular contact email",
+    "Split of won amount by lead source",
+
 ]
 
 for q in canned_questions:
