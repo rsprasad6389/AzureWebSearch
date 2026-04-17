@@ -75,20 +75,23 @@ def clean_code(text: str):
 # 6️⃣ MAIN LOGIC - Executes analysis on df_contact
 # ---------------------------------------
 def ContactAgent_fn(query: str):
-    global df_contact
+    global df
+    df = pd.read_pickle('df_misc_funnel.pkl')
     print('I am in contact agent')
     prompt_template = """
 You are ContactGPT — an expert analyst of contact opportunity history.
 
-You have a pandas dataframe called `df_contact` with columns:
-- contact id
-- total_oppts
-- open_oppts
-- closed_oppts
-- total_amount_won
-- total_amount_lost
-- win_rate_contact
-- oppt_history (JSON array)
+You have a pandas dataframe called `df` with columns:
+"account name" - name of the account
+"opportunity id" - id of the opportunity 
+"contact name" - name of the contact/customer
+"contact email" - email of the contact/customer
+"stage of oppt" - stage of the opportunity 
+"amount of opportunity" - value of the opportunity
+"reason won/lost" - reason as to why an opportunity was won or lost
+"product in the opportunity" - product associated with the opportunity
+"lead source" - str - The original or detailed source of the lead (Web, Event, Partner, Referral).
+"opco" - Danaher operating company 
 
 ======================================================
 BEHAVIOR RULES (CRITICAL)
@@ -113,13 +116,14 @@ THEN:
 
 INSTEAD PYTHON MUST:
 
-1. Filter df_contact for the contact_id (case-insensitive)
+1. Filter df for the email address given by user
 2. Extract:
       - row_data = row with all columns
-      - oppt_json = the JSON list from row["oppt_history"]
+      
+      
 3. Assign:
       result = row_data (as a DataFrame or dict)
-      oppt_json = oppt_json list
+
 4. DO NOT create charts
 5. DO NOT compute metrics
 6. DO NOT print anything
@@ -129,7 +133,7 @@ The LLM outside Python will generate the text summary.
 ### 2️⃣ ANALYSIS MODE (WRITE PYTHON)
 
 If question is ANY other type of analytical query:
-- Use df_contact
+- Use df
 - Write proper Python code
 - Assign final output to result
 - If chart created, assign to fig
@@ -162,7 +166,7 @@ Write ONLY Python code below.
     code = clean_code(python_script.content)
 
     import numpy as np
-    exec_env = {"df_contact": df_contact, "pd": pd, "np": np, "plt": plt}
+    exec_env = {"df": df, "pd": pd, "np": np, "plt": plt}
 
     # Run the produced code
     exec(code, exec_env, exec_env)
@@ -192,7 +196,8 @@ Write ONLY Python code below.
     "result": rows,
     "columns": cols,
     "chart_stage_path": chart_stage_path,
-    "code": code
+    "code": code,
+    "oppt_json" : rows
 }
 
 
@@ -203,7 +208,7 @@ Write ONLY Python code below.
 def FM_Contact_Tool(query: str):
     """
 Use this tool for ALL questions related to:
-- contact details or details of an email id
+- details of an email id/customer
 - total opportunities
 - open/closed opportunities
 - won/lost amounts
